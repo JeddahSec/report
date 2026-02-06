@@ -1,0 +1,441 @@
+\documentclass[a4paper, 12pt]{article}
+
+% *** IDIOMA ***
+\usepackage[utf8]{inputenc}
+
+\usepackage{indentfirst} % Indents first paragraph of sections
+
+% *** COLOR *** 
+\usepackage[table]{xcolor}
+\definecolor{azul}{RGB}{0,89,140}
+\definecolor{SecurityRed}{HTML}{8B0000}
+\definecolor{lightgray}{rgb}{0.83, 0.83, 0.83}
+\definecolor{grayblack}{RGB}{50,50,50}
+\definecolor{light-gray}{gray}{0.95}
+\usepackage[most]{tcolorbox}
+% Define the rounded inline code style
+\newtcbox{\code}{
+	on line, 
+	arc=2pt,                          % Adjust this value for more/less curve
+	boxrule=0pt,                      % No border line
+	colback=gray!15,                  % Light gray background
+	colframe=gray!20,                 % Frame matches background
+	fontupper=\ttfamily,              % Monospace font
+	boxsep=0pt, left=2pt, right=2pt, top=1pt, bottom=1pt % Internal padding
+}
+
+% *** FIGURE ***
+\usepackage{graphicx}
+\graphicspath{{./Figuras}}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage[font={color=grayblack}]{caption}
+
+
+%*** TABLAS ***
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{makecell}
+
+% *** REFERENCIAS ***
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=azul, urlcolor=azul, linktocpage, hyperfootnotes=true}
+
+% *** FONT ***
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+
+% *** GEOMETRIA ***
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,top=35mm,bottom=30mm,headheight=35mm}
+
+% *** DATE ***
+\usepackage[useregional]{datetime2}
+
+
+% *** CODE ***
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Bash,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+
+
+
+% *** HEADER ***
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0.5pt}
+\let\oldheadrule\headrule
+\renewcommand{\headrule}{\color{azul}\oldheadrule}
+\renewcommand{\footrulewidth}{0.5pt}
+\let\oldfootrule\footrule
+\renewcommand{\footrule}{\color{azul}\oldfootrule}
+
+%*** FOOTER ***
+\lfoot{\textcolor{grayblack}{\small \titulo}}
+\cfoot{}
+\rfoot{{\textcolor{grayblack}{\small Page. \thepage\ - \pageref{LastPage}}}}
+
+%** HEADER ***
+\lhead{\includegraphics[width=0.15\textwidth]{logo}}
+\chead{{\small \autor}}
+\rhead{\DTMsetstyle{ddmmyyyy}\fecha}
+\usepackage{setspace}
+\usepackage{titlesec}
+\titleformat{\section}{\color{azul}\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\color{azul}\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\color{azul}\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+
+\begin{document}
+% New Command
+\newcommand{\fecha}{\DTMdate{2026-02-06}}
+\newcommand{\titulo}{Security Assessment Report}
+\newcommand{\autor}{Hussain Almalki}
+
+\renewcommand{\figurename}{\bfseries Figure}
+\renewcommand{\tablename}{\bfseries Table}
+\renewcommand{\thefootnote}{\textcolor{grayblack}{\arabic{footnote}}}
+
+\color{grayblack}
+
+\begin{titlepage}
+	\thispagestyle{empty}
+	\begin{tikzpicture}[remember picture, overlay]
+		\node [inner sep=0pt] at (current page.center){\includegraphics[width=21cm]{cover}};
+	\end{tikzpicture}
+	\hfill
+	\begin{minipage}{8cm}
+		\vspace{5cm}
+	\begin{flushright}
+	\begin{spacing}{3}
+		{\fontsize{40}{50}\selectfont \titulo}
+	\end{spacing}
+
+\end{flushright}
+	\end{minipage}
+\vfill
+\hfill
+\begin{minipage}{10cm}
+\begin{flushright}
+	\begin{spacing}{1}
+	{\Large \bfseries \textit{Target Host: HTB Bashed}} \\ [0.5cm]
+
+{\Large \autor} \\
+{\Large 	6 Friday, 2026} \\
+
+
+\begin{center}
+	{\footnotesize This document is strictly confidential and subject to the Non-Disclosure Agreement (NDA) between JeddahSec and the Client.}
+\end{center}
+
+	\end{spacing}
+
+\end{flushright}
+\end{minipage}
+
+\end{titlepage}
+	
+
+
+
+% *** CONTENTS ***
+\tableofcontents
+\clearpage
+
+\section{Confidentiality Statement}
+
+Non-Disclosure Agreement \textbf{NDA} \& Legal notice strictly confidential for authorized recipients only
+\subsection{Proprietary Information Notice}
+
+This document contains highly sensitive and proprietary information related to the cybersecurity posture and technical vulnerabilities of the target system \textbf{HTB: Bashed}. The information contained herein is intended solely for the person or entity to which it is addressed and may contain confidential and/or privileged material.
+
+\subsection{Prohibition of Disclosure}
+In accordance with standard industry Non-Disclosure Agreements \textbf{NDA}, any redistribution, review, retransmission, dissemination, or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is strictly prohibited.
+
+\subsection{Non-Disclosure Obligations}
+By accessing this report, the recipient agrees to the following terms:
+\begin{itemize}
+	\item[a.] Third-Party Restriction: You shall not disclose, reveal, or share any part of this report with any third party, including external consultants, media outlets, or unauthorized personnel, without prior written consent.
+	\item[b.] Data Protection: This report must be stored in a secure environment with restricted access to prevent unauthorized leakage.
+	\item[c.] Limited Use: The technical details including exploit methods, payloads, and flags provided in this document are for educational and remediation purposes only. Any unauthorized use of this information against systems without explicit permission is illegal.
+	\item[d.] Return or Destruction: Upon request, or at the conclusion of the evaluation period, all copies of this document must be returned or permanently destroyed.
+\end{itemize}
+
+\newpage
+\subsection{Legal Consequences}
+Unauthorized disclosure of the contents of this report may lead to legal action, including but not limited to claims for damages and injunctive relief. This document is protected under intellectual property and trade secret laws.
+
+\subsection{Document Control}
+This section supports accountability, compliance, and consistent document management across all controlled information. \footnote{\textcolor{grayblack}{Final Report confirms that the document has completed all drafting, review, and approval stages and is issued as the authoritative version.}}
+
+
+
+\begin{table}[h]
+		\centering
+	\caption{{\footnotesize Information about the target device}}
+	\rowcolors{1}{white}{lightgray}
+	\arrayrulecolor{grayblack}
+	{\color{grayblack}
+	\begin{tabular}{p{2cm}cccc}
+		\toprule 
+	\hline
+	Host & IP  & Date & Classification & Status \\
+	\hline
+	BASHED  & 10.129.13.52 & February 6, 2026 & SECRET / PROPRIETARY & Final Report \\
+	\hline
+	\bottomrule
+	\end{tabular}}
+\end{table}
+
+
+
+\clearpage
+
+\section{Executive Summary}
+The security audit of the Bashed machine revealed critical vulnerabilities involving exposed development tools and misconfigured system permissions. The attack chain successfully demonstrated a full system compromise, starting from an unprivileged web user and escalating to a root-level administrative account.
+
+\section{Technical audit Phases}
+\subsection{Phase I: Enumeration \& Web Discovery}
+\subsubsection{Network Service Scanning}
+
+The audit began with a comprehensive service scan using nmap on the target \code{{\footnotesize IP 10.129.13.52}}.
+
+\begin{description}
+	\item[Open Port:]The scan identified that Port 80 TCP is open and running an HTTP service as shown in the \autoref{fig:01nmapscanning}.
+\end{description}
+\begin{description}
+	\item[Web Server Version:]The server is identified as Apache httpd 2.4.18, running on an Ubuntu operating system.
+\end{description}
+\begin{description}
+	\item[Application Identity]The HTTP page title is listed as \code{{\footnotesize Arrexel's}} Development Site, suggesting the presence of custom development code or scripts.
+\end{description}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{01_nmapScanning}
+	\caption{{\footnotesize The Nmap scan results reveal the presence of an Apache server running on port 80.}}
+	\label{fig:01nmapscanning}
+\end{figure}
+
+\clearpage
+
+\subsubsection{Web Directory Enumeration}
+To further map the attack surface, an automated directory scan was performed using the http-enum script.
+
+The following sensitive or interesting directories were discovered as shown in the \autoref{fig:03nmapwebscan}. \textbf{/dev/} A development directory that often contains unfinished or insecure tools. \textbf{/php/} A directory likely containing backend PHP scripts. \textbf{/uploads/} A folder identified as potentially interesting, which may allow for file upload testing.\textbf{Additional Assets} Standard directories for /css/, /images/, and /js/ were also noted with directory listing enabled.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{03_nmapWebScan}
+	\caption{{\footnotesize The Nmap scan found several interesting directories on the web server.}}
+	\label{fig:03nmapwebscan}
+\end{figure}
+
+
+\subsubsection{System Information}
+\begin{description}
+	\item[OS Codename:] External research into the software versions \code{{\footnotesize Apache 2.4.18}} and launchpad data correlates with Ubuntu Xenial as shown in the \autoref{fig:02lanuchpad}.
+\end{description}
+\begin{description}
+	\item[Latency:] The host was verified as active with a latency of approximately 0.19s during the initial scan.
+\end{description}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{02lanuchpad}
+	\caption{{\footnotesize This figure shows the upload details for an Ubuntu software package}}
+	\label{fig:02lanuchpad}
+\end{figure}
+\clearpage
+
+\subsection{Phase II: Initial Access \& Reverse Shell}
+\subsubsection{Discovery of PHPBash}
+Further manual inspection of the \code{{\footnotesize /dev/}} directory confirmed the presence of a web-based terminal as shown in the \autoref{fig:06bashedshell}.
+Available tools the directory contains two primary files, \code{{\footnotesize phpbash.php}} and \code{{\footnotesize phpbash.min.php}}.
+Vulnerability these tools are intended to assist with penetration testing by providing a shell directly through the browser. Their presence in a publicly accessible directory allows any unauthorized user to execute system commands.
+Using the phpbash interface, a Bash-based reverse shell was executed to bypass the limitations of the web UI as shown in the \autoref{fig:07netcat}.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.80\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figuras/06_bashedshell}
+		\caption{{\footnotesize This image figure a web shell (phpbash.php})}
+		\label{fig:06bashedshell}
+	\end{subfigure}\hfil
+	\begin{subfigure}{0.80\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figuras/07_netcat}
+		\caption{{\footnotesize Established a persistent connection via Netcat}}
+		\label{fig:07netcat}
+	\end{subfigure}
+	\caption{Access Level \code{{\footnotesize www-data}} Service Account as shown in the \autoref{fig:06bashedshell}. Control Established a persistent connection via Netcat on the auditor's machine as shown in the \autoref{fig:07netcat}.}
+\end{figure}
+\clearpage
+
+
+\subsection{Phase III: Lateral Movement \& User Flag}
+\subsubsection{Initial Access Stabilization}
+\begin{wrapfigure}[9]{l}{0.3\linewidth}
+	\vspace{-10pt}
+	\includegraphics[width=1\linewidth]{lateral}
+\end{wrapfigure}
+While a web shell like \code{{\footnotesize phpbash.php}} allows for command execution through a browser, it is often unstable, lacks a full terminal interface like tab-completion, and is easily interrupted. Establishing a reverse shell is the logical next step to gain a persistent, interactive command-line environment.
+Following the discovery of the web shell, a more stable interactive environment was established. Method  a reverse shell connection was caught using Netcat \code{{\footnotesize ncat}} on port 443. Identity verification the id and \code{{\footnotesize whoami}} commands confirmed the current session is running as \code{{\footnotesize www-data}} with \code{{\footnotesize uid=33}} as shown in the \autoref{fig:07netcat}. A reverse shell works by having the target machine the victim initiate an outgoing connection to the attacker's machine. This is highly effective because most firewalls allow outgoing traffic even if they block incoming connections. This utility, often called the TCP/IP Swiss Army Knife, was used here as a listener. By running a command like \code{{\footnotesize nc -lvnp 443}}, the attacker prepares their system to catch the incoming connection from the target.The choice of Port 443 the standard port for HTTPS is a strategic move to bypass security filters. Security software often overlooks traffic on this port, assuming it is encrypted web browsing.
+
+
+\subsubsection{User Flag Retrieval}
+Local enumeration of the \code{{\footnotesize /home}} directory revealed two user folders: arrexel and \code{{\footnotesize scriptmanager}} as shown in the figure \ref{fig:08userflag}. Flag acquisition the user flag was successfully located and read from \code{{\footnotesize /home/arrexel/user.txt}}. User flag value \code{{\footnotesize e1ffae7dba0caef6730b43bdd8d33d64}}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{Figuras/08_userflag}
+	\caption{{\footnotesize User flag}}
+	\label{fig:08userflag}
+\end{figure}
+\clearpage
+
+\subsubsection{Lateral Movement to Scriptmanager}
+An audit of current sudo privileges revealed a critical configuration error.
+\begin{itemize}
+	\item Misconfiguration: The user \code{{\footnotesize www-data}} is permitted to execute any command as the user scriptmanager without requiring a password \code{{\footnotesize NOPASSWD: ALL}} as shown in the \autoref{fig:09sudol}.
+\end{itemize}
+\begin{itemize}
+	\item Execution: By executing \code{{\footnotesize sudo -u scriptmanager bash}}, the auditor successfully transitioned to the \code{{\footnotesize scriptmanager}} user account.
+\end{itemize}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{Figuras/09_sudo_l}
+	\caption{{\footnotesize Lateral Movement}}
+	\label{fig:09sudol}
+\end{figure}
+%\clearpage
+
+
+\subsubsection{Root Vector Identification}
+Further enumeration as scriptmanager was performed to find a path to full system administrative \code{{\footnotesize root}} access.
+Suspicious directory a search for files owned by the current user identified a non-standard root-level directory \code{{\footnotesize /scripts}}.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1\linewidth]{Figuras/10_findScript}
+		\caption{{\footnotesize We ensure /scripts is owned and writable only by root:root.}}
+		\label{fig:10findscript}
+	\end{figure}
+\clearpage
+A custom Bash script was developed to monitor scheduled processes and identify automated tasks. \textbf{Automated task analysis} the monitoring process confirmed that a system cron job is regularly executing all Python (.py) files within the \code{{\footnotesize /scripts}} directory under root privileges as shown in the \autoref{fig:13pid}.
+
+% Source - https://stackoverflow.com/a/3175141
+% Posted by Cloudanger, modified by community. See post 'Timeline' for change history
+% Retrieved 2026-02-06, License - CC BY-SA 4.0
+
+\begin{lstlisting}
+#!/bin/bash
+# Pre-define the format to keep things clean
+FORMAT="user,command"
+
+# Initial state
+old_process=$(ps -eo "$FORMAT")
+
+while true; do
+	new_process=$(ps -eo "$FORMAT")
+	# Compare and filter in one go
+	# We ignore 'kworker' and the 'ps' command itself to reduce noise
+	diff <(echo "$old_process") <(echo "$new_process") | \
+		grep -E "^[<>]" | \
+		grep -vE "kworker|process"
+	old_process="$new_process"
+	# Crucial: give the CPU a break
+	sleep 1
+done
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{Figuras/13_pid}
+	\caption{{\footnotesize Executing all Python (.py) files within the /scripts directory under root privileges.}}
+	\label{fig:13pid}
+\end{figure}
+\newpage
+
+\begin{wrapfigure}[9]{l}{0.33\linewidth}
+	\vspace{-10pt}
+	\includegraphics[width=1\linewidth]{vuln}
+\end{wrapfigure}
+
+Vulnerability because scriptmanager owns the files in this directory, the auditor can modify them to execute arbitrary code with root privileges. To retrieve the Root Flag, the attack exploits the fact that scriptmanager owns the files in the \code{{\footnotesize /scripts}} directory, which allows for the execution of arbitrary code with root privileges.
+
+A Python file (e.g., test.py) is created or modified within the \code{{\footnotesize /scripts}} directory. The script contains the command \code{{\footnotesize os.system("chmod u+s /bin/bash")}}, which targets the system's bash binary.Because a system cron job regularly executes all .py files in this directory as the root user, the command is run with highest authority
+
+\begin{lstlisting}
+	#!/usr/bin/python
+	
+	import os
+	os.system("chmod u+s /bin/bash")
+\end{lstlisting}
+
+The command \code{{\footnotesize watch -n1 ls -l /bin/bash}} is used to monitor the file permissions. Once the cron job runs, the permissions change to \code{{\footnotesize -rwsr-xr-x}}. The "s" indicates the SUID bit is set, allowing any user to run bash with root owner privileges as shown in the \autoref{fig:15sbash} .
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{Figuras/15_sbash}
+	\caption{{\footnotesize The monitor the file permissions}}
+	\label{fig:15sbash}
+\end{figure}
+
+The user executes \code{{\footnotesize bash -p}} to start a shell that respects the SUID permissions. Running \code{{\footnotesize whoami}} confirms the user is now root. The final command \code{{\footnotesize cat /root/root.txt}} displays the root flag: \code{{\footnotesize 2cbe9e6c20e50904537163b4e6c9c04b}} as shown in the \autoref{fig:16rootflag}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{Figuras/16_rootflag}
+	\caption{{\footnotesize Root flag}}
+	\label{fig:16rootflag}
+\end{figure}
+\newpage
+
+\section{Risk Mitigation \& Remediation}
+\begin{table}[h]
+	\centering
+	\caption{A findings and remediation summary}
+	\rowcolors{1}{white}{lightgray}
+	\arrayrulecolor{grayblack}
+	{\color{grayblack}
+\begin{tabular}{p{4cm}cc}
+	\toprule 
+	\textbf{Severity} & \textbf{Vulnerability} &\textbf{Remediation Action} \\
+	\midrule
+	 CRITICAL & Exposed Web Shell (phpbash) &\makecell{ Remove all web shells and \\ development files from production.}\\
+	 HIGH & Insecure Sudo Configuration &\makecell{ Remove NOPASSWD privileges \\ for service accounts in /etc/sudoers.}\\
+	 HIGH & Writable Automated Scripts &\makecell{ Ensure root-executed scripts are \\ only writable by the root user.}\\
+	\bottomrule
+\end{tabular}}
+\label{tab:datos}
+\end{table}
+
+
+\section{Conclusion}
+The audit concludes that the system's security was compromised due to human error (leftover dev tools) and improper permission management. Immediate patching of the sudoers file and sanitization of the web root is required.
+
+\end{document}

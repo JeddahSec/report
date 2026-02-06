@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Pre-define the format to keep things clean
+FORMAT="user,command"
+
+# Initial state
+old_process=$(ps -eo "$FORMAT")
+
+while true; do
+    new_process=$(ps -eo "$FORMAT")
+
+    # Compare and filter in one go
+    # We ignore 'kworker' and the 'ps' command itself to reduce noise
+    diff <(echo "$old_process") <(echo "$new_process") | \
+        grep -E "^[<>]" | \
+        grep -vE "kworker|process"
+
+    old_process="$new_process"
+
+    # Crucial: give the CPU a break
+    sleep 1
+done
