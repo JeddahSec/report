@@ -19,7 +19,6 @@
 ---
 
 ## 📸 معاينة التقرير (Screenshots)
-*(قم بإضافة لقطات الشاشة هنا لتظهر للمستخدمين)*
 ![Main Page Preview](Screenshots/cover.png)
 ![Technical Dashboard](Screenshots/dashboard.png)
 ![Main Page Preview](Screenshots/page1.png) ![Technical Dashboard](Screenshots/page2.png)
